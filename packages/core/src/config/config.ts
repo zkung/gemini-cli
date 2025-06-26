@@ -120,6 +120,7 @@ export interface ConfigParameters {
     enableRecursiveFileSearch?: boolean;
   };
   checkpointing?: boolean;
+  autoChat?: boolean;
   proxy?: string;
   cwd: string;
   fileDiscoveryService?: FileDiscoveryService;
@@ -159,6 +160,7 @@ export class Config {
   private fileDiscoveryService: FileDiscoveryService | null = null;
   private gitService: GitService | undefined = undefined;
   private readonly checkpointing: boolean;
+  private readonly autoChat: boolean;
   private readonly proxy: string | undefined;
   private readonly cwd: string;
   private readonly bugCommand: BugCommandSettings | undefined;
@@ -201,6 +203,7 @@ export class Config {
         params.fileFiltering?.enableRecursiveFileSearch ?? true,
     };
     this.checkpointing = params.checkpointing ?? false;
+    this.autoChat = params.autoChat ?? false;
     this.proxy = params.proxy;
     this.cwd = params.cwd ?? process.cwd();
     this.fileDiscoveryService = params.fileDiscoveryService ?? null;
@@ -417,6 +420,10 @@ export class Config {
 
   getCheckpointingEnabled(): boolean {
     return this.checkpointing;
+  }
+
+  getAutoChatEnabled(): boolean {
+    return this.autoChat;
   }
 
   getProxy(): string | undefined {
